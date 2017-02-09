@@ -630,6 +630,13 @@ programmer parent "avrispmkII"
 ;
 
 programmer
+  id    = "pruss";
+  desc  = "TI AM335x PRUSS";
+  type  = "pruss";
+  connection_type = serial;
+;
+
+programmer
   id    = "buspirate";
   desc  = "The Bus Pirate";
   type  = "buspirate";

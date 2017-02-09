@@ -113,6 +113,21 @@ if test x$have_libusb = xyes; then
 fi
 AC_SUBST(LIBUSB, $LIBUSB)
 
+AH_TEMPLATE([HAVE_LIBPRUSSDRV],
+            [Define if PRUSS support is enabled via libprussdrv])
+AC_CHECK_LIB([prussdrv], [prussdrv_init], [have_libprussdrv=yes])
+if test x$have_libprussdrv = xyes; then
+   case $target in
+       *)
+               LIBPRUSSDRV="/usr/lib/libprussdrv.a"
+               ;;
+   esac
+   AC_DEFINE([HAVE_LIBPRUSSDRV])
+   AC_CHECK_HEADERS([prussdrv.h])
+   AC_CHECK_HEADERS([pruss_intc_mapping.h])
+fi
+AC_SUBST(LIBPRUSSDRV, $LIBPRUSSDRV)
+
 AH_TEMPLATE([HAVE_LIBUSB_1_0],
             [Define if USB support is enabled via libusb 1.0])
 AC_CHECK_LIB([usb-1.0], [libusb_init], [have_libusb_1_0=yes])
@@ -570,3 +585,8 @@ else
    echo "DISABLED   linuxgpio"
 fi
 
+if test x$have_libprussdrv = xyes; then
+   echo "DO HAVE    libprussdrv"
+else
+   echo "DON'T HAVE libprussdrv"
+fi
