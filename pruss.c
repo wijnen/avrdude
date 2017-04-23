@@ -28,8 +28,7 @@
 #include <pruss_intc_mapping.h>
 
 #include "avrdude.h"
-#include "avr.h"
-#include "pgm.h"
+#include "libavrdude.h"
 #include "pruss.h"
 
 #define PATH_MAX	4096
@@ -256,7 +255,7 @@ static int pruss_paged_load(PROGRAMMER * pgm, AVRPART * p, AVRMEM * mem,
     fprintf(stderr, "%s: pruss_paged_load(.., %s, 0x%x, %d, %d...)\n",
 	    progname, mem->desc, addr, n_bytes, page_size);
 
-  memset(shared_ram, 0, 1024);
+  memset((void *)shared_ram, 0, 1024);
 
   /* determine which command is to be used */
   if (strcmp(mem->desc, "flash") == 0) {
@@ -295,7 +294,7 @@ static int pruss_paged_write(PROGRAMMER * pgm, AVRPART * p, AVRMEM * mem,
             progname, mem->desc, addr, n_bytes, page_size);
 
   /* clean shared_ram */
-  memset(shared_ram, 0, 1024);
+  memset((void *)shared_ram, 0, 1024);
 
   /* copy data to shared ram */
   if (verbose >= 2)
